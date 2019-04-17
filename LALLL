@@ -1,0 +1,39 @@
+library(RCurl)
+ 
+# import the function from repository
+url_robust <- "https://raw.githubusercontent.com/IsidoreBeautrelet/economictheoryblog/master/robust_summary.R"
+eval(parse(text = getURL(url_robust, ssl.verifypeer = FALSE)),
+     envir=.GlobalEnv)
+     
+     
+     
+     
+     rm(list=ls())
+ 
+# load necessary packages for importing the function
+library(RCurl)
+# load necessary packages for the example
+library(gdata) 
+library(zoo)
+ 
+# import the function
+url_robust <- "https://raw.githubusercontent.com/IsidoreBeautrelet/economictheoryblog/master/robust_summary.R"
+eval(parse(text = getURL(url_robust, ssl.verifypeer = FALSE)),
+     envir=.GlobalEnv)
+ 
+ 
+# download data set for example
+url_data <- "https://economictheoryblog.files.wordpress.com/2016/12/data.xls"
+data <- read.xls(gsub("s:",":",url_data))
+ 
+ 
+# estimate simple linear model
+reg <- lm(id_score ~ class_size, 
+             data=data)
+ 
+# use new summary function
+summary(reg)
+summary(reg,cluster = c("class_id"))
+ 
+# Note, the standard errors are much 
+# larger with clustered standard errors
